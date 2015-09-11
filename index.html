@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+<title>Model</title>
+
+<body>
+    <div style="padding-left:20px;padding-right:20px;padding-top:5px;padding-bottom:60px;max-width:800px;display:block;margin-left:auto;margin-right:auto;">
+        <div class="form-group">
+            <label for="age">Amount Financed</label>
+            <input class="form-control" type="number" name="amount" id="amount" value="0" min="0" />
+        </div>
+		<div class="form-group">
+            <label for="age">Income</label>
+            <input class="form-control" type="number" name="income" id="income" value="0" min="0" />
+        </div>
+		<div class="form-group">
+            <label for="age">Age (Years)</label>
+            <input class="form-control" type="number" name="age" id="age" pattern="[0-9]{1,3}" value="21" min="0" />
+        </div>
+        <div class="form-group">
+            <label for="tenure">Tenure (Months)</label>
+            <input class="form-control" type="number" name="tenure" id="tenure" value="24" min="0" />
+        </div>
+        <div class="form-group">
+            <label for="margin">Margin</label>
+            <input class="form-control" type="number" name="margin" id="margin" value="0" min="0" />
+        </div>
+        <div class="form-group">
+            <label for="residence">Residence</label>
+            <select class="form-control" name="residence" id="residence">
+                <option value="NA">NA</option>
+                <option value="OWN">OWN</option>
+                <option value="RENTED">RENTED</option>
+                <option value="PARENTS">PARENTS</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="distance">Distance (km)</label>
+            <input class="form-control" type="number" name="distance" id="distance" value="10" min="0" />
+        </div>
+        <div class="form-group">
+            <label for="segment">Segment</label>
+            <select class="form-control" name="segment" id="segment">
+                <option value="Hatchback">Hatchback</option>
+                <option value="MPV">MPV</option>
+                <option value="MUV">MUV</option>
+                <option value="SUV">SUV</option>
+                <option value="Sedan">Sedan</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="region">Region</label>
+            <select class="form-control" name="region" id="region">
+                <option value="AP1">AP1</option>
+                <option value="AP2">AP2</option>
+                <option value="Bihar">Bihar</option>
+                <option value="CG1">CG1</option>
+                <option value="CG2">CG2</option>
+                <option value="Cendival1">Cendival1</option>
+                <option value="Cendival2">Cendival2</option>
+                <option value="Delhi NCR">Delhi NCR</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana & HP">Haryana & HP</option>
+                <option value="Jharkand">Jharkand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="MH1">MH1</option>
+                <option value="MH2">MH2</option>
+                <option value="Orissa">Orissa</option>
+                <option value="Punjab, HP & J&K">Punjab, HP & J&K</option>
+                <option value="Rajasthan 1">Rajasthan 1</option>
+                <option value="Rajasthan 2">Rajasthan 2</option>
+                <option value="TN1">TN1</option>
+                <option value="TN2">TN2</option>
+                <option value="Uttarpradesh">Uttarpradesh</option>
+                <option value="Uttrakhand">Uttrakhand</option>
+                <option value="WB &NE">WB & NE</option>
+            </select>
+        </div>
+        <div class="form-group">
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-default">
+					<input id="rad-sal" name="rad-income" class="" type="radio">Salaried</input>
+				</label>
+				<label class="btn btn-default">
+					<input id="rad-sel" name="rad-income" class="" type="radio">Self Employed</input>
+				</label>
+				<label class="btn btn-default">
+					<input id="rad-nip" name="rad-income" class="" type="radio">No Income Proof</input>
+				</label>
+			</div>
+        </div>
+		
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="calculate()" data-toggle="modal" data-target="#myModal" style="float:right">
+                Check
+            </button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Results</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="pd" class="col-sm-2 control-label">PD</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="pd">pd</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Score</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="score">score</p>
+                                    </div>
+                                </div>
+                                <div class="" role="alert" id="decision">
+									<span id="decision-icon" class="glyphicon" aria-hidden="true"></span>
+                                    <span id="decision-text"></span>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-2 control-label">NCL</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="ncl">ncl</p>
+                                    </div>
+                                </div>
+								<div class="form-group">
+                                    <label class="col-sm-2 control-label">IRR</label>
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static" id="irr">irr</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
